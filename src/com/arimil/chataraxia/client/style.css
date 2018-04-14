@@ -1,0 +1,57 @@
+.root {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-base: rgba(60, 63, 65, 255);
+}
+
+.text-field {
+    -fx-border-color: #333;
+    -fx-border-insets: 0, 0, 0, 0, 1px, 0, 0, 0;
+    -fx-background-color: inherit, inherit;
+}
+
+.text-field .content {
+    -fx-background-color: inherit;
+}
+
+.text-field:focused .content {
+    -fx-background-color: inherit;
+}
+
+.list-view {
+    -fx-border-color: #333;
+    -fx-border-insets: 0, 0, 0, 0, 1px, 0, 0, 0;
+    -fx-background-color: inherit, inherit;
+}
+
+.list-view .content {
+    -fx-background-color: inherit;
+}
+
+.list-view:focused .content {
+    -fx-background-color: inherit;
+}
+
+.scroll-pane {
+    -fx-background-color: inherit, inherit;
+}
+
+.scroll-pane .content {
+    -fx-background-color: inherit;
+}
+
+.scroll-pane:focused .content {
+    -fx-background-color: inherit;
+}
+
+.table-view {
+    -fx-background-color: inherit, inherit;
+}
+
+.table-view .content {
+    -fx-background-color: inherit;
+}
+
+.table-view:focused .content {
+    -fx-background-color: inherit;
+}
