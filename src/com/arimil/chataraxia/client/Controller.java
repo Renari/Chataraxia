@@ -54,7 +54,7 @@ public class Controller {
     private void keyListener(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             if (textField.isFocused()) {
-                addMessage("test", textField.getText());
+                addMessage(textField.getText(), "test");
                 addMessage("this is a system message");
                 textField.setText(""); // clear text after message is sent
 
