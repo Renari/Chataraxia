@@ -20,7 +20,7 @@ public class Controller {
     public WebView webView;
     public ListView clientList;
     private WebEngine engine;
-    public ClientConnection connection;
+    ClientConnection connection;
 
     @FXML
     public void initialize() {
@@ -45,7 +45,7 @@ public class Controller {
         return sb.toString();
     }
 
-    public void connect(String ip, int port) {
+    void connect(String ip, int port) {
         if(connection == null || !connection.socket.isConnected()) {
             connection = new ClientConnection(ip, port);
             new Thread(connection).start();
