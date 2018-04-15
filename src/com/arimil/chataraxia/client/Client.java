@@ -35,8 +35,12 @@ public class Client extends Application {
     }
 
     @Override
-    public void stop() throws Exception {
-        controller.connection.socket.close();
-        super.stop();
+    public void stop() {
+        try {
+            controller.connection.socket.close();
+            super.stop();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 }
