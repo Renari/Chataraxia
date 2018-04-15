@@ -11,12 +11,13 @@ import java.util.List;
 public class Client extends Application {
 
     public static Controller contoller;
+    public static Controller controller;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("client.fxml"));
         Parent root = loader.load();
-        contoller = loader.getController();
+        controller = loader.getController();
         primaryStage.setTitle("Chataraxia");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

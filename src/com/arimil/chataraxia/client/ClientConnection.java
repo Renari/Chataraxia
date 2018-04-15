@@ -26,7 +26,7 @@ public class ClientConnection implements Runnable {
                 outputStream.writeObject(obj);
                 outputStream.reset();
             } else {
-                Client.contoller.addMessage("Connect before trying to send messages '/connect <host> <port>'");
+                Client.controller.addMessage("Connect before trying to send messages '/connect <host> <port>'");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -37,7 +37,7 @@ public class ClientConnection implements Runnable {
     public void run() {
         try {
             socket.connect(new InetSocketAddress(host, port));
-            Client.contoller.addMessage("Connected to " + host + " on " + port);
+            Client.controller.addMessage("Connected to " + host + " on " + port);
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
             while (socket.isConnected()) {
@@ -46,7 +46,7 @@ public class ClientConnection implements Runnable {
                 msg.process(socket);
             }
         } catch (IOException e) {
-            Client.contoller.addMessage("Unable to connect to " + host + " on " + port);
+            Client.controller.addMessage("Unable to connect to " + host + " on " + port);
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

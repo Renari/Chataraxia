@@ -22,9 +22,9 @@ public class ChatMessage extends Message {
     @Override
     protected void client(Socket sender) {
         if(from != null) {
-            Client.contoller.addMessage(message, from);
+            Client.controller.addMessage(message, from);
         } else {
-            Client.contoller.addMessage(message);
+            Client.controller.addMessage(message);
         }
     }
 
