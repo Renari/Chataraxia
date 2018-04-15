@@ -97,7 +97,7 @@ public class Controller {
                     for (int j = 0; j < 11; j++) {
                         String locationValue = String.valueOf(map[i + startX][j + startY]); // map data by default
                         for (ClientData client : clients) {
-                            if(startX + i == client.getX() - 1 && startY + j == client.getY() - 1) {
+                            if (startX + i == client.getX() - 1 && startY + j == client.getY() - 1) {
                                 // someone is at this location set the value to an asterisk
                                 locationValue = "*";
                             }
@@ -181,15 +181,16 @@ public class Controller {
     private void keyListener(KeyEvent event) {
         if (textField.isFocused()) {
             if (event.getCode() == KeyCode.ENTER) {
-                if (textField.getText().length() == 0) {
-                    Scene scene = textField.getScene();
-                    scene.getRoot().requestFocus();
-                } else if (textField.getText(0, 1).equals("/")) {
-                    handleSlashCommand(textField.getText());
-                } else {
-                    connection.send(new ChatMessage(textField.getText()));
+                if (textField.getText().length() > 0) {
+                    if (textField.getText(0, 1).equals("/")) {
+                        handleSlashCommand(textField.getText());
+                    } else {
+                        connection.send(new ChatMessage(textField.getText()));
+                    }
                 }
                 textField.setText("");
+                Scene scene = textField.getScene();
+                scene.getRoot().requestFocus();
                 event.consume();
             }
         } else if ((event.getCode() == KeyCode.UP ||
