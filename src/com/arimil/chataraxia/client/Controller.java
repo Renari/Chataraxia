@@ -1,6 +1,7 @@
 package com.arimil.chataraxia.client;
 
 import com.arimil.chataraxia.messages.ChatMessage;
+import com.arimil.chataraxia.messages.LoginMessage;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -81,6 +82,13 @@ public class Controller {
                                 addMessage("/connect <host> <port>");
                             }
                             break;
+                        case "/login":
+                            if(command.length >= 3) {
+                                connection.send(new LoginMessage(command[1], command[2]));
+                            }
+                            break;
+                        default:
+                            addMessage("Unknown command: " + input);
                     }
                 } else {
                     connection.send(new ChatMessage(textField.getText()));
