@@ -44,7 +44,7 @@
             <RowConstraints minHeight="18.0" prefHeight="18.0" vgrow="NEVER" />
         </rowConstraints>
       </GridPane>
-      <Label fx:id="coords" alignment="CENTER" contentDisplay="RIGHT" minHeight="-Infinity" minWidth="-Infinity" prefWidth="198.0" text="32, 10" />
+      <Label fx:id="coords" alignment="CENTER" contentDisplay="RIGHT" minHeight="-Infinity" minWidth="-Infinity" prefWidth="198.0" />
         <ListView fx:id="clientList" onKeyPressed="#keyListener" prefWidth="198.0" VBox.vgrow="ALWAYS" />
     </VBox>
     <padding>
