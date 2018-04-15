@@ -111,6 +111,7 @@ public class Controller {
                     handleSlashCommand(textField.getText());
                 } else {
                     connection.send(new ChatMessage(textField.getText()));
+                    textField.setText("");
                 }
                 event.consume();
             }
