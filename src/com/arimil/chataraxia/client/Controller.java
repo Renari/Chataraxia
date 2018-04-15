@@ -68,53 +68,65 @@ public class Controller {
     public void addMessage(String message, String from) {
         Platform.runLater(() -> {
             if(from != null) {
-                engine.executeScript("addMessage('" + stringToHtmlString( message) + "', '" + stringToHtmlString(from) + "')");
+                engine.executeScript("addMessage('" + stringToHtmlString(message) + "', '" + stringToHtmlString(from) + "')");
             } else {
                 engine.executeScript("addMessage('" + stringToHtmlString(message) + "')");
             }
         });
     }
 
+    private void handleSlashCommand(String message) {
+        String[] command = message.split(" ");
+        switch (command[0]) {
+            case "/connect":
+                if (command.length >= 3) {
+                    try {
+                        int port = Integer.parseInt(command[2]);
+                        connect(command[1], port);
+                    } catch (NumberFormatException e) {
+                        addMessage("Invalid port specified");
+                    }
+                } else {
+                    addMessage("/connect <host> <port>");
+                }
+                break;
+            case "/login":
+                if (command.length >= 3) {
+                    connection.send(new LoginMessage(command[1], command[2]));
+                }
+                break;
+            default:
+                addMessage("Unknown command: " + message);
+        }
+    }
+
     @FXML
     private void keyListener(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER) {
-            if (textField.isFocused()) {
-                if(textField.getText(0, 1).equals("/")) {
-                    String input = textField.getText();
-                    String[] command = input.split(" ");
-                    switch (command[0]) {
-                        case "/connect":
-                            if(command.length >= 3) {
-                                try {
-                                    int port = Integer.parseInt(command[2]);
-                                    connect(command[1], port);
-                                } catch (NumberFormatException e) {
-                                    addMessage("Invalid port specified");
-                                }
-                            } else {
-                                addMessage("/connect <host> <port>");
-                            }
-                            break;
-                        case "/login":
-                            if(command.length >= 3) {
-                                connection.send(new LoginMessage(command[1], command[2]));
-                            }
-                            break;
-                        default:
-                            addMessage("Unknown command: " + input);
-                    }
+        if(textField.isFocused()) {
+            if (event.getCode() == KeyCode.ENTER) {
+                if(textField.getText().length() == 0) {
+                    Scene scene = textField.getScene();
+                    scene.getRoot().requestFocus();
+                } else if(textField.getText(0, 1).equals("/")) {
+                    handleSlashCommand(textField.getText());
                 } else {
                     connection.send(new ChatMessage(textField.getText()));
                 }
-                textField.setText(""); // clear text
-                // remove focus from text field
-                Scene scene = textField.getScene();
-                scene.getRoot().requestFocus();
-            } else {
-                // if enter is pressed focus the text field
-                textField.requestFocus();
+                event.consume();
             }
+        } else if((event.getCode() == KeyCode.UP ||
+                event.getCode() == KeyCode.DOWN ||
+                event.getCode() == KeyCode.LEFT ||
+                event.getCode() == KeyCode.RIGHT) &&
+                !textField.isFocused()) {
+            // handle movement packet
+            System.out.println("got arrowkey event");
             event.consume();
+        } else {
+            if (event.getCode() == KeyCode.ENTER) {
+                textField.requestFocus();
+                event.consume();
+            }
         }
     }
 }
