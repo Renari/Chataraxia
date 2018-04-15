@@ -6,6 +6,7 @@ import com.arimil.chataraxia.messages.MoveMessage;
 import com.arimil.chataraxia.server.ClientData;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -106,7 +107,12 @@ public class Controller {
                             // this person is at this location set the location value to an O
                             locationValue = "O";
                         }
-                        miniMapGrid.add(new Label(locationValue), i, j);
+                        Label gridLabel = new Label(locationValue);
+                        gridLabel.setPrefWidth(18);
+                        gridLabel.setMaxWidth(Double.POSITIVE_INFINITY);
+                        gridLabel.setMinWidth(Double.NEGATIVE_INFINITY);
+                        gridLabel.setAlignment(Pos.CENTER);
+                        miniMapGrid.add(gridLabel, i, j);
                     }
                 }
             });
