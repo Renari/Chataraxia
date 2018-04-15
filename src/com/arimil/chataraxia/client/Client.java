@@ -10,7 +10,6 @@ import java.util.List;
 
 public class Client extends Application {
 
-    public static Controller contoller;
     public static Controller controller;
 
     @Override
@@ -35,4 +34,9 @@ public class Client extends Application {
         }
     }
 
+    @Override
+    public void stop() throws Exception {
+        controller.connection.socket.close();
+        super.stop();
+    }
 }

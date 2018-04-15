@@ -5,18 +5,22 @@ import com.arimil.chataraxia.messages.LoginMessage;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
+import java.util.List;
+
 public class Controller {
 
     public TextField textField;
     public WebView webView;
+    public ListView clientList;
     private WebEngine engine;
-    private ClientConnection connection;
+    public ClientConnection connection;
 
     @FXML
     public void initialize() {
@@ -46,6 +50,15 @@ public class Controller {
             connection = new ClientConnection(ip, port);
             new Thread(connection).start();
         }
+    }
+
+    public void updateUserList(List<String> users) {
+        Platform.runLater(() -> {
+           clientList.getItems().clear();
+            for (String name : users) {
+                clientList.getItems().add(name);
+            }
+        });
     }
 
     public void addMessage(String message) {

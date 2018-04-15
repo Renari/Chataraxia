@@ -50,6 +50,7 @@ public class LoginMessage extends Message {
             client.setAuth(true);
             client.setName(name);
             outputStream.reset();
+            Server.updateClientList();
         } catch (IOException e) {
             e.printStackTrace();
         }

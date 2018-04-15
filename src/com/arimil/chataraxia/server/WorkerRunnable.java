@@ -2,11 +2,11 @@ package com.arimil.chataraxia.server;
 
 import com.arimil.chataraxia.Message;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.SocketException;
 
 public class WorkerRunnable implements Runnable{
 
@@ -28,11 +28,12 @@ public class WorkerRunnable implements Runnable{
             }
             output.close();
             input.close();
-        } catch (SocketException e) {
-            Server.clients.remove(clientSocket);
-            e.printStackTrace();
+        } catch (EOFException e) {
+          System.out.println(clientSocket.getInetAddress() + " disconnected");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        Server.clients.remove(clientSocket);
+        Server.updateClientList();
     }
 }

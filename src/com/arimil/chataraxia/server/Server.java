@@ -1,8 +1,14 @@
 package com.arimil.chataraxia.server;
 
+import com.arimil.chataraxia.messages.ClientList;
+
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -15,6 +21,28 @@ public class Server implements Runnable {
 
     public Server(int port) {
         this.serverPort = port;
+    }
+
+    // TODO: make this only update for the current user instead of sending the whole list of users
+    public static void updateClientList() {
+        List<String> names = new ArrayList<>();
+        Collection<ClientData> clients = Server.clients.values();
+        for (ClientData client : clients) {
+            if(client.isAuth()) {
+                names.add(client.getName());
+            }
+        }
+        for (ClientData client : clients) {
+            if(client.isAuth()) {
+                ObjectOutputStream outputStream = client.getOutputStream();
+                try {
+                    outputStream.writeObject(new ClientList(names));
+                    outputStream.reset();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public void run() {
