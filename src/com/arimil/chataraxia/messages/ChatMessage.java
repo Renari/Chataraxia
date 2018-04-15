@@ -2,7 +2,7 @@ package com.arimil.chataraxia.messages;
 
 import com.arimil.chataraxia.Message;
 import com.arimil.chataraxia.client.Client;
-import com.arimil.chataraxia.server.ClientData;
+import com.arimil.chataraxia.server.ServerData;
 import com.arimil.chataraxia.server.Server;
 
 import java.io.IOException;
@@ -30,17 +30,23 @@ public class ChatMessage extends Message {
 
     @Override
     protected void server(Socket sender) {
-        ClientData client = Server.clients.get(sender);
+        ServerData client = Server.clients.get(sender);
         if(client.isAuth()) {
             this.from = client.getName();
-            for (Map.Entry<Socket, ClientData> entry : Server.clients.entrySet())
-                try {
-                    ObjectOutputStream outputStream = entry.getValue().getOutputStream();
-                    outputStream.writeObject(this);
-                    outputStream.reset();
-                } catch (IOException e) {
-                    e.printStackTrace();
+            for (Map.Entry<Socket, ServerData> entry : Server.clients.entrySet()) {
+                ServerData target = entry.getValue();
+                if(target.isAuth() &&
+                        target.getX() <= client.getX() + 5 && target.getX() >= client.getX() - 5 &&
+                        target.getY() <= client.getY() + 5 && target.getY() >= client.getY() - 5) {
+                    try {
+                        ObjectOutputStream outputStream = entry.getValue().getOutputStream();
+                        outputStream.writeObject(this);
+                        outputStream.reset();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
+            }
         } else {
             try {
                 client.getOutputStream().writeObject(new ChatMessage("Please login with '/login <username> <password>' before sending messages"));

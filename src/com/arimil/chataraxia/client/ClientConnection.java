@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class ClientConnection implements Runnable {
 
@@ -45,6 +46,8 @@ public class ClientConnection implements Runnable {
                 Message msg = (Message)obj;
                 msg.process(socket);
             }
+        } catch (SocketException e) {
+            Client.controller.addMessage("Lost connection");
         } catch (IOException e) {
             Client.controller.addMessage("Unable to connect to " + host + " on " + port);
             e.printStackTrace();

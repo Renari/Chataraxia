@@ -34,6 +34,6 @@ public class WorkerRunnable implements Runnable{
             e.printStackTrace();
         }
         Server.clients.remove(clientSocket);
-        Server.updateClientList();
+        Server.updateClientData();
     }
 }

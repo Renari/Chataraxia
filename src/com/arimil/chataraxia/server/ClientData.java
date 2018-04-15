@@ -1,8 +1,18 @@
 package com.arimil.chataraxia.server;
 
-import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class ClientData {
+public class ClientData implements Serializable {
+
+    ClientData(String name, int x, int y) {
+        this.name = name;
+        this.x = x;
+        this.y = y;
+    }
+
+    private String name;
+    private int x;
+    private int y;
 
     public String getName() {
         return name;
@@ -12,25 +22,19 @@ public class ClientData {
         this.name = name;
     }
 
-    private String name;
-
-    public boolean isAuth() {
-        return auth;
+    public int getX() {
+        return x;
     }
 
-    public void setAuth(boolean auth) {
-        this.auth = auth;
+    public void setX(int x) {
+        this.x = x;
     }
 
-    private boolean auth = false;
-
-    public ObjectOutputStream getOutputStream() {
-        return outputStream;
+    public int getY() {
+        return y;
     }
 
-    public void setOutputStream(ObjectOutputStream outputStream) {
-        this.outputStream = outputStream;
+    public void setY(int y) {
+        this.y = y;
     }
-
-    private ObjectOutputStream outputStream;
 }

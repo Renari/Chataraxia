@@ -1,6 +1,6 @@
 package com.arimil.chataraxia.server;
 
-import com.arimil.chataraxia.messages.ClientList;
+import com.arimil.chataraxia.messages.ClientUpdate;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -17,26 +17,25 @@ public class Server implements Runnable {
     private int serverPort;
     private ServerSocket serverSocket = null;
     private boolean isStopped = false;
-    public static ConcurrentMap<Socket, ClientData> clients = new ConcurrentHashMap<>();
+    public static ConcurrentMap<Socket, ServerData> clients = new ConcurrentHashMap<>();
 
     public Server(int port) {
         this.serverPort = port;
     }
 
-    // TODO: make this only update for the current user instead of sending the whole list of users
-    public static void updateClientList() {
-        List<String> names = new ArrayList<>();
-        Collection<ClientData> clients = Server.clients.values();
-        for (ClientData client : clients) {
+    public static void updateClientData() {
+        List<ClientData> clientData = new ArrayList<>();
+        Collection<ServerData> clients = Server.clients.values();
+        for (ServerData client : clients) {
             if(client.isAuth()) {
-                names.add(client.getName());
+                clientData.add(new ClientData(client.getName(), client.getX(), client.getY()));
             }
         }
-        for (ClientData client : clients) {
+        for (ServerData client : clients) {
             if(client.isAuth()) {
                 ObjectOutputStream outputStream = client.getOutputStream();
                 try {
-                    outputStream.writeObject(new ClientList(names));
+                    outputStream.writeObject(new ClientUpdate(clientData, client.getX(), client.getY()));
                     outputStream.reset();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -52,7 +51,7 @@ public class Server implements Runnable {
             try {
                 clientSocket = this.serverSocket.accept();
                 System.out.println("Received connection from: " + clientSocket.getInetAddress());
-                clients.put(clientSocket, new ClientData());
+                clients.put(clientSocket, new ServerData());
             } catch (IOException e) {
                 if (isStopped()) {
                     System.out.println("Server Stopped.");
