@@ -2,13 +2,14 @@ package com.arimil.chataraxia;
 
 import com.arimil.chataraxia.client.Client;
 import com.arimil.chataraxia.server.Server;
+import com.arimil.chataraxia.server.ServerData;
 import javafx.application.Application;
 
 import java.util.Scanner;
 
 public class Main {
 
-    public static boolean isServerSide = false;
+    static boolean isServerSide = false;
 
     public static void main(String[] args) {
         if(args.length >= 2 && args[0].equals("--server")) {
@@ -32,6 +33,12 @@ public class Main {
                         break;
                     case "connected" :
                         System.out.println("Connections: " + Server.clients.size());
+                        break;
+                    case "where":
+                        for (ServerData client :
+                             Server.clients.values()) {
+                            System.out.println(client.getName() + ": " + client.getX() + "," + client.getY());
+                        }
                         break;
                     default:
                         System.out.println("Unknown command: " + input);
