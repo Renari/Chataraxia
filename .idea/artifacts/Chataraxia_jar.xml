@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Chataraxia:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Chataraxia_jar</output-path>
+    <root id="archive" name="Chataraxia.jar">
+      <element id="module-output" name="Chataraxia" />
+    </root>
+  </artifact>
+</component>
