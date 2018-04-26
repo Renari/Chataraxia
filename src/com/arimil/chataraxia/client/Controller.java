@@ -216,7 +216,8 @@ public class Controller {
             event.consume();
         } else {
             if (event.getCode() == KeyCode.ENTER) {
-                textField.requestFocus();
+                Scene scene = textField.getScene();
+                scene.getRoot().requestFocus();
                 event.consume();
             }
         }
