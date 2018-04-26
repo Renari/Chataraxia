@@ -28,8 +28,8 @@ public class LoginMessage extends Message {
     @Override
     protected void server(Socket sender) {
         ServerData serverData = Server.clients.get(sender);
-        File file = FileSystems.getDefault().getPath("users\\" + name).toFile();
-        File map = FileSystems.getDefault().getPath("maps\\map0").toFile();
+        File file = FileSystems.getDefault().getPath("users/" + name).toFile();
+        File map = FileSystems.getDefault().getPath("maps/map0").toFile();
         try {
             ObjectOutputStream outputStream = serverData.getOutputStream();
             if (file.exists()) {
