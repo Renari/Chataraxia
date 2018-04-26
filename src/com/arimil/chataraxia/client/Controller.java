@@ -76,7 +76,7 @@ public class Controller {
 
     public void updateMap(List<ClientData> clients, int x, int y) {
         coords.setText(x + ", " + y);
-        File file = FileSystems.getDefault().getPath("maps\\map0").toFile();
+        File file = FileSystems.getDefault().getPath("maps/map0").toFile();
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
             String line = br.readLine();
